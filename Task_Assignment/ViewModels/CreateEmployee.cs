@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -20,6 +21,7 @@ namespace Task_Assignment.ViewModels
         [Required(ErrorMessage = "Please fill-in employee ID.")]
         [Range(0, 9999999999, ErrorMessage = "Employee ID must be 1-10 numbers.")]
         [Remote(action: "IsEmployeeIDUnique", controller: "Employees", ErrorMessage = "This employee ID has already been registered. Please enter a different employee ID.")]
+        [DisplayName("Employee ID")]
         public long EmployeeID { get; set; }
 
         [Required(ErrorMessage = "Please fill-in valid email address.")]
@@ -27,6 +29,7 @@ namespace Task_Assignment.ViewModels
         public string Email { get; set; }
 
         [StringLength(20, ErrorMessage = "Full name must not exceed 20 characters.")]
+        [DisplayName("Full Name")]
         public string FullName { get; set; }
 
         [DataType(DataType.Password)]
@@ -37,11 +40,13 @@ namespace Task_Assignment.ViewModels
         [DataType(DataType.Password)]
         [Required(ErrorMessage = "Please fill-in confirm password.")]
         [Compare("Password", ErrorMessage = "The password fields did not match.")]
+        [DisplayName("Comfirm Password")]
         public string ComfirmPassword { get; set; }
 
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         [Required(ErrorMessage = "Please fill-in join date.")]
+        [DisplayName("Join Date")]
         public DateTime JoinDate { get; set; }
 
         [Required(ErrorMessage = "Please select a position.")]

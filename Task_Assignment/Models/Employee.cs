@@ -16,18 +16,22 @@ namespace Task_Assignment.Models
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [DisplayName("Employee ID")]
         public long EmployeeID { get; set; }
 
         [Required]
         public string Email { get; set; }
 
         [StringLength(20)]
+        [DisplayName("Full Name")]
         public string FullName { get; set; }
 
         [Required]
         public string Password { get; set; }
 
         [Required]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
+        [DisplayName("Join Date")]
         public DateTime JoinDate { get; set; }
 
         [Required]
