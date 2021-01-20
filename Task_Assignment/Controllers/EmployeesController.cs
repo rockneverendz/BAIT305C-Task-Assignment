@@ -78,7 +78,9 @@ namespace Task_Assignment.Controllers
             {
                 return HttpNotFound();
             }
-            return View(employee);
+            EditEmployee modal = new EditEmployee();
+            modal.Fill(employee);
+            return View(modal);
         }
 
         // POST: Employees/Edit/5
@@ -86,15 +88,16 @@ namespace Task_Assignment.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "EmployeeID,Username,Email,FullName,Password,JoinDate,Position,Team,Status,Security")] Employee employee)
+        public ActionResult Edit([Bind(Include = "EmployeeID,Email,FullName,Password,ComfirmPassword,JoinDate,Position,Team,Status,Security")] EditEmployee modifiedEmployee)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(employee).State = EntityState.Modified;
+                Employee originalEmployee = db.Employees.Find(modifiedEmployee.EmployeeID);
+                modifiedEmployee.UpdateOriginal(originalEmployee);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(employee);
+            return View(modifiedEmployee);
         }
 
         // POST: Employees/Delete/5
