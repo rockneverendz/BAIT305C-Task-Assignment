@@ -1,0 +1,66 @@
+﻿@model IEnumerable<Task_Assignment.Models.Employee>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Listing</h2>
+
+<p>
+    <a class="btn btn-primary" href="@Url.Action("Create", "Employees", null, Request.Url.Scheme)" role="button">Create New</a>
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Username)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FullName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.JoinDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Team)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Position)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+        <th></th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Username)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.JoinDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Team)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Position)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                <a class="btn btn-outline-secondary" href="@Url.Action("Edit", "Employees", new { id = item.EmployeeID }, Request.Url.Scheme)" role="button">Edit</a>
+            </td>
+            <td>
+                <a class="btn btn-outline-secondary" href="@Url.Action("Delete", "Employees", new { id = item.EmployeeID }, Request.Url.Scheme)" role="button">Delete</a>
+            </td>
+        </tr>
+    }
+
+</table>
