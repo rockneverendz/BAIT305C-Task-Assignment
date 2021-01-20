@@ -38,21 +38,6 @@ namespace Task_Assignment.Controllers
             return View(db.Employees.ToList());
         }
 
-        // GET: Employees/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Employee employee = db.Employees.Find(id);
-            if (employee == null)
-            {
-                return HttpNotFound();
-            }
-            return View(employee);
-        }
-
         // GET: Employees/Create
         public ActionResult Create()
         {
@@ -108,21 +93,6 @@ namespace Task_Assignment.Controllers
                 db.Entry(employee).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
-            }
-            return View(employee);
-        }
-
-        // GET: Employees/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Employee employee = db.Employees.Find(id);
-            if (employee == null)
-            {
-                return HttpNotFound();
             }
             return View(employee);
         }
