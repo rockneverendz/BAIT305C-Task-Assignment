@@ -12,94 +12,90 @@ namespace Task_Assignment.Models
     public class Employee
     {
         [Required]
-        [Remote(action: "IsUserNameUnique", controller: "Employee", ErrorMessage = "This username has already been registered. Please enter a different username.")]
         public string Username { get; set; }
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        [Required(ErrorMessage = "Please fill-in employee ID.")]
-        [Range(0, 9999999999, ErrorMessage = "Employee ID must be 1-10 numbers.")]
-        [Remote(action: "IsEmployeeIDUnique", controller: "Employee", ErrorMessage = "This employee ID has already been registered. Please enter a different employee ID.")]
         public long EmployeeID { get; set; }
 
-        [Required(ErrorMessage = "Please fill-in valid email address.")]
-        [EmailAddress(ErrorMessage = "This email address is not valid.")]
-        [Index(IsUnique = true)]
+        [Required]
         public string Email { get; set; }
 
-        [StringLength(20, ErrorMessage = "Full name must not exceed 20 characters.")]
+        [StringLength(20)]
         public string FullName { get; set; }
 
         [Required]
         public string Password { get; set; }
 
-        [Required(ErrorMessage = "Please fill-in join date.")]
+        [Required]
         public DateTime JoinDate { get; set; }
-        
-        [Required(ErrorMessage = "Please select a position.")]
+
+        [Required]
         public Position Position { get; set; }
-        
-        [Required(ErrorMessage = "Please select a team.")]
+
+        [Required] 
         public Team Team { get; set; }
-        
+
         public Status Status { get; set; }
 
-        [Required(ErrorMessage = "Please fill-in security.")]
-        [StringLength(40, ErrorMessage = "Security must not exceed 40 characters.")]
+        [Required]
+        [StringLength(40)]
         public string Security { get; set; }
+
+        public short LoginAttempt { get; set; }
 
         public string IPAddress { get; set; }
     }
 
     public enum Position
     {
-        [Description("Director")]
+        [Display(Name = "Director")]
         Director,
-        [Description("Human Resource")]
+        [Display(Name = "Human Resource")]
         HumanResource,
-        [Description("Finance")]
+        [Display(Name = "Finance")]
         Finance,
-        [Description("Admin")]
+        [Display(Name = "Admin")]
         Admin,
-        [Description("Manager")]
+        [Display(Name = "Manager")]
         Manager,
-        [Description("Quality Assurance Engineer")]
+        [Display(Name = "Quality Assurance Engineer")]
         QualityAssuranceEngineer,
-        [Description("Solution Architect")]
+        [Display(Name = "Solution Architect")]
         SolutionArchitect,
-        [Description("Business Analysis")]
+        [Display(Name = "Business Analysis")]
         BusinessAnalysis,
-        [Description("Art Director")]
+        [Display(Name = "Art Director")]
         ArtDirector,
-        [Description("Team Lead")]
+        [Display(Name = "Team Lead")]
         TeamLead,
-        [Description("Senior Software Engineer")]
+        [Display(Name = "Senior Software Engineer")]
         SeniorSoftwareEngineer,
-        [Description("UI Engineer")]
+        [Display(Name = "UI Engineer")]
         UIEngineer,
-        [Description("Support Engineer")]
+        [Display(Name = "Support Engineer")]
         SupportEngineer,
-        [Description("Infrastructure Support Engineer")]
+        [Display(Name = "Infrastructure Support Engineer")]
         InfrastructureSupportEngineer,
     }
 
     public enum Team
     {
-        [Description("Operation")]
+        [Display(Name = "Operation")]
         Operation,
-        [Description("Project Management")]
+        [Display(Name = "Project Management")]
         ProjectManagement,
-        [Description("Architect")]
+        [Display(Name = "Architect")]
         Architect,
-        [Description("Designer")]
+        [Display(Name = "Designer")]
         Designer,
-        [Description("Development")]
+        [Display(Name = "Development")]
         Development,
-        [Description("Infrastructure Support")]
+        [Display(Name = "Infrastructure Support")]
         InfrastructureSupport,
-        [Description("Production Support")]
+        [Display(Name = "Production Support")]
         ProductionSupport,
-        [Description("Quality Assurance")]
+        [Display(Name = "Quality Assurance")]
         QualityAssurance,
     }
 
