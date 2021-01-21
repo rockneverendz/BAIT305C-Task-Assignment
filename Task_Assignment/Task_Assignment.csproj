@@ -140,6 +140,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\DeleteEmployee.cs" />
     <Compile Include="ViewModels\EditEmployee .cs" />
     <Compile Include="ViewModels\CreateEmployee.cs" />
   </ItemGroup>

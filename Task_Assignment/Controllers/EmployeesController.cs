@@ -100,12 +100,12 @@ namespace Task_Assignment.Controllers
             return View(modifiedEmployee);
         }
 
-        // POST: Employees/Delete/5
-        [HttpPost, ActionName("Delete")]
+        // POST: Employees/Delete/
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult Delete([Bind(Include = "EmployeeID")] DeleteEmployee modal)
         {
-            Employee employee = db.Employees.Find(id);
+            Employee employee = db.Employees.Find(modal.EmployeeID);
             db.Employees.Remove(employee);
             db.SaveChanges();
             return RedirectToAction("Index");
@@ -119,5 +119,6 @@ namespace Task_Assignment.Controllers
             }
             base.Dispose(disposing);
         }
+
     }
 }
