@@ -37,7 +37,7 @@ namespace Task_Assignment.ViewModels
         public string ComfirmPassword { get; set; }
 
         [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         [Required(ErrorMessage = "Please fill-in join date.")]
         [DisplayName("Join Date")]
         public DateTime JoinDate { get; set; }

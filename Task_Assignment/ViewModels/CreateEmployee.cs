@@ -14,7 +14,7 @@ namespace Task_Assignment.ViewModels
 {
     public class CreateEmployee
     {
-        [Required]
+        [Required(ErrorMessage = "Please fill-in username.")]
         [Remote(action: "IsUserNameUnique", controller: "Employees", ErrorMessage = "This username has already been registered. Please enter a different username.")]
         public string Username { get; set; }
 
@@ -44,9 +44,10 @@ namespace Task_Assignment.ViewModels
         public string ComfirmPassword { get; set; }
 
         [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         [Required(ErrorMessage = "Please fill-in join date.")]
         [DisplayName("Join Date")]
+
         public DateTime JoinDate { get; set; }
 
         [Required(ErrorMessage = "Please select a position.")]
