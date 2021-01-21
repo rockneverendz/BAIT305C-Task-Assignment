@@ -46,10 +46,10 @@
                 @Html.DisplayFor(modelItem => item.JoinDate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Team)
+                @EnumExtensions.GetDisplayName(item.Team)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Position)
+                @EnumExtensions.GetDisplayName(item.Position)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Status)
