@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Task_Assignment.Data;
+using Task_Assignment.Infrastructure;
 using Task_Assignment.Models;
 using Task_Assignment.ViewModels;
 
@@ -33,12 +34,14 @@ namespace Task_Assignment.Controllers
         }
 
         // GET: Employees
+        [EmployeeAuthorize]
         public ActionResult Index()
         {
             return View(db.Employees.ToList());
         }
 
         // GET: Employees/Create
+        [EmployeeAuthorize]
         public ActionResult Create()
         {
             return View();
@@ -47,6 +50,7 @@ namespace Task_Assignment.Controllers
         // POST: Employees/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [EmployeeAuthorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "EmployeeID,Username,Email,FullName,Password,ComfirmPassword,JoinDate,Position,Team,Security")] CreateEmployee createEmployee)
@@ -66,6 +70,7 @@ namespace Task_Assignment.Controllers
         }
 
         // GET: Employees/Edit/5
+        [EmployeeAuthorize]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -85,6 +90,7 @@ namespace Task_Assignment.Controllers
         // POST: Employees/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [EmployeeAuthorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "EmployeeID,Email,FullName,Password,ComfirmPassword,JoinDate,Position,Team,Status,Security")] EditEmployee modifiedEmployee)
@@ -100,6 +106,7 @@ namespace Task_Assignment.Controllers
         }
 
         // POST: Employees/Delete/
+        [EmployeeAuthorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete([Bind(Include = "EmployeeID")] DeleteEmployee modal)

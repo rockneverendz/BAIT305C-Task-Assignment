@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
 using Task_Assignment.Data;
 using Task_Assignment.ViewModels;
 
@@ -12,8 +13,12 @@ namespace Task_Assignment.Controllers
     {
         private readonly ApplicationDbContext db = new ApplicationDbContext();
 
-        public ActionResult Index()
+        public ActionResult Index(string reason)
         {
+            if (reason != null)
+            {
+                ModelState.AddModelError("", reason);
+            }
             return View();
         }
 
@@ -35,7 +40,7 @@ namespace Task_Assignment.Controllers
                     db.SaveChanges();
 
                     Session["LoginAttempt"] = null;
-                    Session["EmployeeID"] = user.EmployeeID.ToString();
+                    Session["EmployeeID"] = user.EmployeeID;
                     return RedirectToAction("Index", "Employees");
                 }
             }
