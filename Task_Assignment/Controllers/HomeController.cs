@@ -3,28 +3,87 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Task_Assignment.Data;
+using Task_Assignment.ViewModels;
 
 namespace Task_Assignment.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly ApplicationDbContext db = new ApplicationDbContext();
+
         public ActionResult Index()
         {
             return View();
         }
 
-        public ActionResult About()
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Login(Login login)
         {
-            ViewBag.Message = "Your application description page.";
+            if (ModelState.IsValid)
+            {
+                Session["LoginAttempt"] = Session["LoginAttempt"] == null ? (byte)1 : Convert.ToByte(Session["LoginAttempt"]) + 1;
 
-            return View();
+                var user = db.Employees.Where(
+                    e => e.Username.Equals(login.Username)
+                ).FirstOrDefault();
+                
+                if (IsValid(user, login.Password))
+                {
+                    user.IPAddress = Request.UserHostAddress;
+                    db.SaveChanges();
+
+                    Session["LoginAttempt"] = null;
+                    Session["EmployeeID"] = user.EmployeeID.ToString();
+                    return RedirectToAction("Index", "Employees");
+                }
+            }
+            return View("Index", login);
         }
 
-        public ActionResult Contact()
+        private bool IsValid(Models.Employee user, string password)
         {
-            ViewBag.Message = "Your contact page.";
+            // TODO Check IP
+            // if IP address in Ban list return false
 
-            return View();
+            if (Convert.ToByte(Session["LoginAttempt"]) >= 10)
+            {
+                // TODO Ban IP
+                ModelState.AddModelError("", "Unable to log in from disallowed IP address.");
+                return false;
+            }
+
+            if (user == null)
+            {
+                ModelState.AddModelError("", "Incorrect username / password. Please try again.");
+                return false;
+            }
+
+            if (user.Status == Models.Status.Suspended)
+            {
+                ModelState.AddModelError("", "Too many failed login attempts. Account has been locked.  ");
+                return false;
+            }
+
+            if (user.LoginAttempt >= 10)
+            {
+                user.Status = Models.Status.Suspended;
+                user.LoginAttempt = 0;
+                db.SaveChanges();
+                ModelState.AddModelError("", "Too many failed login attempts. Account has been locked.  ");
+                return false;
+            }
+
+            if (user.Password != password)
+            {
+                user.LoginAttempt++;
+                db.SaveChanges();
+                ModelState.AddModelError("", "Incorrect username / password. Please try again.");
+                return false;
+            }
+
+            return true;
         }
     }
 }

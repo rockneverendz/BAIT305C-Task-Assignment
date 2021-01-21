@@ -56,7 +56,6 @@ namespace Task_Assignment.Controllers
                 var employee = createEmployee.ToEmployee();
 
                 employee.Status = Status.Active;
-                employee.IPAddress = Request.UserHostAddress;
 
                 db.Employees.Add(employee);
                 db.SaveChanges();

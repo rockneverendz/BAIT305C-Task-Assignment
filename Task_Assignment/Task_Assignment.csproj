@@ -145,6 +145,7 @@
     <Compile Include="ViewModels\DeleteEmployee.cs" />
     <Compile Include="ViewModels\EditEmployee .cs" />
     <Compile Include="ViewModels\CreateEmployee.cs" />
+    <Compile Include="ViewModels\Login.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-grid.css" />
