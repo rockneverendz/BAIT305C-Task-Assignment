@@ -49,12 +49,16 @@ namespace Task_Assignment.Controllers
 
         private bool IsValid(Models.Employee user, string password)
         {
-            // TODO Check IP
-            // if IP address in Ban list return false
+            if (db.RestrictedIPs.Find(Request.UserHostAddress) != null)
+            {
+                ModelState.AddModelError("", "Unable to log in from disallowed IP address.");
+                return false;
+            }
 
             if (Convert.ToByte(Session["LoginAttempt"]) >= 10)
             {
-                // TODO Ban IP
+                db.RestrictedIPs.Add(new Models.RestrictedIP() { IPAddress = Request.UserHostAddress });
+                db.SaveChanges();
                 ModelState.AddModelError("", "Unable to log in from disallowed IP address.");
                 return false;
             }
