@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Task_Assignment.Models.Employee>
+﻿@model PagedList.IPagedList<Task_Assignment.Models.Employee>
+@using PagedList.Mvc;
 
 @{
     ViewBag.Title = "Index";
@@ -12,22 +13,22 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Username)
+            Username
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.FullName)
+            Full Name
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.JoinDate)
+            Join Date
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Team)
+            Team
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Position)
+            Position
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Status)
+            Status
         </th>
         <th></th>
         <th></th>
@@ -64,6 +65,38 @@
     }
 </table>
 
+<br />
+
+<div class="align-items-center d-flex justify-content-between">
+
+    <ul class="my-auto pagination">
+
+        <li class="page-item">
+            <a class="page-link" href="@Url.Action("Index", new { page = 1 })" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+                <span class="sr-only">Previous</span>
+            </a>
+        </li>
+
+        @for (int i = 1; i <= Model.PageCount; i++)
+        {
+            <li class="@(i == Model.PageNumber ? "page-item active" : "page-item")">
+                <a class="page-link" href="@Url.Action("Index", new { page = i })">@i</a>
+            </li>
+        }
+
+        <li class="page-item">
+            <a class="page-link" href="@Url.Action("Index", new { page = Model.PageSize - 1 })" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+                <span class="sr-only">Next</span>
+            </a>
+        </li>
+
+    </ul>
+    <div>
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    </div>
+</div>
 
 @using (Html.BeginForm("Delete", "Employees", FormMethod.Post))
 {

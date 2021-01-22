@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PagedList;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -35,9 +36,11 @@ namespace Task_Assignment.Controllers
 
         // GET: Employees
         [EmployeeAuthorize]
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
-            return View(db.Employees.ToList());
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+            return View(db.Employees.OrderBy(e => e.Username).ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Employees/Create
