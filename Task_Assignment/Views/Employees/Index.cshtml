@@ -10,7 +10,7 @@
 <p>
     <a class="btn btn-primary" href="@Url.Action("Create", "Employees", null, Request.Url.Scheme)" role="button">Create New</a>
 </p>
-<table class="table">
+<table class="table table-bordered table-striped">
     <tr>
         <th>
             Username
@@ -37,28 +37,28 @@
     @foreach (var item in Model)
     {
         <tr>
-            <td>
+            <td class="align-middle">
                 @Html.DisplayFor(modelItem => item.Username)
             </td>
-            <td>
+            <td class="align-middle">
                 @Html.DisplayFor(modelItem => item.FullName)
             </td>
-            <td>
+            <td class="align-middle">
                 @Html.DisplayFor(modelItem => item.JoinDate)
             </td>
-            <td>
+            <td class="align-middle">
                 @EnumExtensions.GetDisplayName(item.Team)
             </td>
-            <td>
+            <td class="align-middle">
                 @EnumExtensions.GetDisplayName(item.Position)
             </td>
-            <td>
+            <td class="align-middle">
                 @Html.DisplayFor(modelItem => item.Status)
             </td>
-            <td>
+            <td class="align-middle">
                 <a class="btn btn-sm btn-outline-secondary" href="@Url.Action("Edit", "Employees", new { id = item.EmployeeID }, Request.Url.Scheme)" role="button">Edit</a>
             </td>
-            <td>
+            <td class="align-middle">
                 <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#deleteModal" data-employeeid="@item.EmployeeID" data-employeeusername="@item.Username">Delete</button>
             </td>
         </tr>
