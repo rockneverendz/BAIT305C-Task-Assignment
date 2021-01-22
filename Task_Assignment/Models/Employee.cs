@@ -37,7 +37,7 @@ namespace Task_Assignment.Models
         [Required]
         public Position Position { get; set; }
 
-        [Required] 
+        [Required]
         public Team Team { get; set; }
 
         public Status Status { get; set; }
@@ -46,7 +46,7 @@ namespace Task_Assignment.Models
         [StringLength(40)]
         public string Security { get; set; }
 
-        public short LoginAttempt { get; set; }
+        public byte LoginAttempt { get; set; }
 
         public string IPAddress { get; set; }
     }
