@@ -15,6 +15,11 @@ namespace Task_Assignment.Controllers
 
         public ActionResult Index(string reason)
         {
+            if (Session["EmployeeID"] != null)
+            {
+                return RedirectToAction("Index", "Employees");
+            }
+
             if (reason != null)
             {
                 ModelState.AddModelError("", reason);
@@ -45,6 +50,12 @@ namespace Task_Assignment.Controllers
                 }
             }
             return View("Index", login);
+        }
+
+        public ActionResult Logout()
+        {
+            Session.Clear();
+            return View("Index");
         }
 
         private bool IsValid(Models.Employee user, string password)

@@ -14,8 +14,14 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             @Html.ActionLink("Task Assignment", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            <div class="navbar-collapse collapse" id="navbarSupportedContent">
-            </div>
+        <div class="navbar-collapse collapse" id="navbarSupportedContent">
+            @if (Session["EmployeeID"] != null)
+            {
+                <ul class="nav navbar-nav ml-auto">
+                    <li class="nav-item">@Html.ActionLink("Logout", "Logout", "Home", null, new { @class = "nav-link" })</li>
+                </ul>
+            }
+        </div>
         </div>
     </nav>
 
