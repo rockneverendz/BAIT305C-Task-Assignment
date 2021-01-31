@@ -68,16 +68,14 @@ namespace Task_Assignment.Controllers
 
         private bool IsValid(Models.Employee user, string password)
         {
-            if (db.RestrictedIPs.Find(Request.UserHostAddress) != null)
-            {
-                ModelState.AddModelError("", "Unable to log in from disallowed IP address.");
-                return false;
-            }
-
             if (Convert.ToByte(Session["LoginAttempt"]) >= 10)
             {
                 db.RestrictedIPs.Add(new Models.RestrictedIP() { IPAddress = Request.UserHostAddress });
                 db.SaveChanges();
+            }
+
+            if (db.RestrictedIPs.Find(Request.UserHostAddress) != null)
+            {
                 ModelState.AddModelError("", "Unable to log in from disallowed IP address.");
                 return false;
             }
@@ -88,17 +86,15 @@ namespace Task_Assignment.Controllers
                 return false;
             }
 
-            if (user.Status == Models.Status.Suspended)
-            {
-                ModelState.AddModelError("", "Too many failed login attempts. Account has been locked.  ");
-                return false;
-            }
-
             if (user.LoginAttempt >= 10)
             {
                 user.Status = Models.Status.Suspended;
                 user.LoginAttempt = 0;
                 db.SaveChanges();
+            }
+
+            if (user.Status == Models.Status.Suspended)
+            {
                 ModelState.AddModelError("", "Too many failed login attempts. Account has been locked.  ");
                 return false;
             }
