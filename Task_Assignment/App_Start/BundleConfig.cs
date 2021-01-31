@@ -28,6 +28,9 @@ namespace Task_Assignment
 
             bundles.Add(new ScriptBundle("~/bundles/signalR").Include(
                         "~/Scripts/jquery.signalR-{version}.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/alphanum").Include(
+                        "~/Scripts/jquery.alphanum.js"));
         }
     }
 }
