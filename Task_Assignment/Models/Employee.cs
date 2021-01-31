@@ -12,6 +12,7 @@ namespace Task_Assignment.Models
     public class Employee
     {
         [Required]
+        [StringLength(15)]
         public string Username { get; set; }
 
         [Key]
@@ -20,6 +21,7 @@ namespace Task_Assignment.Models
         public long EmployeeID { get; set; }
 
         [Required]
+        [StringLength(254)]
         public string Email { get; set; }
 
         [StringLength(20)]
@@ -27,6 +29,7 @@ namespace Task_Assignment.Models
         public string FullName { get; set; }
 
         [Required]
+        [StringLength(15)]
         public string Password { get; set; }
 
         [Required]
