@@ -11,19 +11,21 @@ namespace Task_Assignment.Infrastructure
 {
     public class EmployeeAuthorize : ActionFilterAttribute, IAuthenticationFilter
     {
-        private readonly ApplicationDbContext db = new ApplicationDbContext();
-
         public void OnAuthentication(AuthenticationContext context)
         {
-            var employeeID = context.HttpContext.Session["EmployeeID"];
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                var employeeID = context.HttpContext.Session["EmployeeID"];
 
-            if (employeeID == null)
-            {
-                context.Result = new HttpUnauthorizedResult("Your session has timed out. Please login again.");
-            }
-            else if (db.Employees.Find(employeeID).IPAddress != context.HttpContext.Request.UserHostAddress)
-            {
-                context.Result = new HttpUnauthorizedResult("Logged out due to multiple login detected.");
+                if (employeeID == null)
+                {
+                    context.Result = new HttpUnauthorizedResult("Unauthorized access. Please login first.");
+                }
+                else if (db.Employees.Find(employeeID).IPAddress != context.HttpContext.Request.UserHostAddress)
+                {
+                    context.HttpContext.Session.Clear();
+                    context.Result = new HttpUnauthorizedResult("Logged out due to multiple login detected.");
+                }
             }
         }
         public void OnAuthenticationChallenge(AuthenticationChallengeContext context)
