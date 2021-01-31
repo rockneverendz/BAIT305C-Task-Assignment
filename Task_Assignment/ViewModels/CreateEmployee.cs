@@ -15,9 +15,8 @@ namespace Task_Assignment.ViewModels
     public class CreateEmployee
     {
         [Required(ErrorMessage = "Please fill-in username.")]
-        
         [Remote(action: "IsUserNameUnique", controller: "Employees", ErrorMessage = "This username has already been registered. Please enter a different username.")]
-        [RegularExpression(@"^(?!.*\s)(?=.*\d)(?=.*[a-zA-Z]).{8,15}$", ErrorMessage = "Password must be 8-15 characters, and include letters and numbers.")]
+        [RegularExpression(@"^(?!.*\s)(?=.*\d)(?=.*[a-zA-Z]).{8,15}$", ErrorMessage = "Username must be 8-15 characters, and include letters and numbers.")]
         public string Username { get; set; }
 
         [Required(ErrorMessage = "Please fill-in employee ID.")]
