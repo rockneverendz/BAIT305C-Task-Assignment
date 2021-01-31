@@ -46,6 +46,14 @@ namespace Task_Assignment.Controllers
 
                     Session["LoginAttempt"] = null;
                     Session["EmployeeID"] = user.EmployeeID;
+
+                    var cookie = new HttpCookie("EmployeeID")
+                    {
+                        Value = user.EmployeeID.ToString(),
+                        Expires = DateTime.UtcNow.AddDays(1),
+                    };
+                    Response.Cookies.Add(cookie);
+
                     return RedirectToAction("Index", "Employees");
                 }
             }
