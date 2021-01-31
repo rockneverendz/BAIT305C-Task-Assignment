@@ -16,13 +16,14 @@ namespace Task_Assignment.Controllers
 {
     public class EmployeesController : Controller
     {
+        private const int PageSize = 3;
         private readonly ApplicationDbContext db = new ApplicationDbContext();
 
         [HttpGet]
         [AllowAnonymous]
         public JsonResult IsUserNameUnique(string Username)
         {
-            bool isUnique = !db.Employees.Any(e => e.Username == Username);
+            bool isUnique = !db.Employees.Any(e => e.Username.Equals(Username) );
             return Json(isUnique, JsonRequestBehavior.AllowGet);
         }
 
@@ -38,9 +39,8 @@ namespace Task_Assignment.Controllers
         [EmployeeAuthorize]
         public ActionResult Index(int? page)
         {
-            int pageSize = 3;
             int pageNumber = (page ?? 1);
-            return View(db.Employees.OrderBy(e => e.Username).ToPagedList(pageNumber, pageSize));
+            return View(db.Employees.OrderBy(e => e.Username).ToPagedList(pageNumber, PageSize));
         }
 
         // GET: Employees/Create
