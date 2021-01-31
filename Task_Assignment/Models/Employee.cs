@@ -51,6 +51,8 @@ namespace Task_Assignment.Models
 
         public byte LoginAttempt { get; set; }
 
+        [Column(TypeName = "VARCHAR")]
+        [StringLength(15)]
         public string IPAddress { get; set; }
     }
 

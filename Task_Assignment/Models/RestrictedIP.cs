@@ -11,6 +11,8 @@ namespace Task_Assignment.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [Column(TypeName = "VARCHAR")]
+        [StringLength(15)]
         public string IPAddress { get; set; }
     }
 }
