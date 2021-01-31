@@ -11,6 +11,7 @@ namespace Task_Assignment.Controllers
 {
     public class HomeController : Controller
     {
+        const byte MaxLoginAttempt = 10;
         private readonly ApplicationDbContext db = new ApplicationDbContext();
 
         public ActionResult Index(string reason)
@@ -86,7 +87,7 @@ namespace Task_Assignment.Controllers
                 return false;
             }
 
-            if (user.LoginAttempt >= 10)
+            if (user.LoginAttempt >= MaxLoginAttempt)
             {
                 user.Status = Models.Status.Suspended;
                 user.LoginAttempt = 0;
