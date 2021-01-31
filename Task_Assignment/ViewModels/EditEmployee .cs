@@ -20,7 +20,7 @@ namespace Task_Assignment.ViewModels
         public long EmployeeID { get; set; }
 
         [Required(ErrorMessage = "Please fill-in valid email address.")]
-        [EmailAddress(ErrorMessage = "This email address is not valid.")]
+        [RegularExpression(@"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", ErrorMessage = "This email address is not valid.")]
         public string Email { get; set; }
 
         [StringLength(20, ErrorMessage = "Full name must not exceed 20 characters.")]

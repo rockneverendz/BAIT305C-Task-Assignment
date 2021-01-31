@@ -15,7 +15,9 @@ namespace Task_Assignment.ViewModels
     public class CreateEmployee
     {
         [Required(ErrorMessage = "Please fill-in username.")]
+        
         [Remote(action: "IsUserNameUnique", controller: "Employees", ErrorMessage = "This username has already been registered. Please enter a different username.")]
+        [RegularExpression(@"^(?!.*\s)(?=.*\d)(?=.*[a-zA-Z]).{8,15}$", ErrorMessage = "Password must be 8-15 characters, and include letters and numbers.")]
         public string Username { get; set; }
 
         [Required(ErrorMessage = "Please fill-in employee ID.")]
@@ -25,7 +27,7 @@ namespace Task_Assignment.ViewModels
         public long EmployeeID { get; set; }
 
         [Required(ErrorMessage = "Please fill-in valid email address.")]
-        [EmailAddress(ErrorMessage = "This email address is not valid.")]
+        [RegularExpression(@"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", ErrorMessage = "This email address is not valid.")]
         public string Email { get; set; }
 
         [StringLength(20, ErrorMessage = "Full name must not exceed 20 characters.")]
