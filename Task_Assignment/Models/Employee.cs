@@ -75,6 +75,8 @@ namespace Task_Assignment.Models
         TeamLead,
         [Display(Name = "Senior Software Engineer")]
         SeniorSoftwareEngineer,
+        [Display(Name = "Software Engineer")]
+        SoftwareEngineer,
         [Display(Name = "UI Engineer")]
         UIEngineer,
         [Display(Name = "Support Engineer")]
