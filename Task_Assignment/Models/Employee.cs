@@ -51,7 +51,7 @@ namespace Task_Assignment.Models
         public string IPAddress { get; set; }
     }
 
-    public enum Position
+    public enum Position : byte
     {
         [Display(Name = "Director")]
         Director,
@@ -85,7 +85,7 @@ namespace Task_Assignment.Models
         InfrastructureSupportEngineer,
     }
 
-    public enum Team
+    public enum Team : byte
     {
         [Display(Name = "Operation")]
         Operation,
@@ -105,7 +105,7 @@ namespace Task_Assignment.Models
         QualityAssurance,
     }
 
-    public enum Status
+    public enum Status : byte
     {
         Active,
         Disabled,
