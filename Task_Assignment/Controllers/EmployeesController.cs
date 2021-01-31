@@ -37,10 +37,61 @@ namespace Task_Assignment.Controllers
 
         // GET: Employees
         [EmployeeAuthorize]
-        public ActionResult Index(int? page)
+        public ActionResult Index(string sortOrder, int? page)
         {
+            var employees = from e in db.Employees 
+                            select e;
+
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.UsernameSortParm = String.IsNullOrEmpty(sortOrder) ? "Username_Desc" : "";
+            ViewBag.FullNameSortParm = sortOrder == ("FullName") ? "FullName_Desc" : "FullName";
+            ViewBag.JoinDateSortParm = sortOrder == ("JoinDate") ? "JoinDate_Desc" : "JoinDate";
+            ViewBag.TeamSortParm = sortOrder == ("Team") ? "Team_Desc" : "Team";
+            ViewBag.PositionSortParm = sortOrder == ("Position") ? "Position_Desc" : "Position";
+            ViewBag.StatusSortParm = sortOrder == ("Status") ? "Status_Desc" : "Status";
+
+            switch (sortOrder)
+            {
+                case "Username_Desc":
+                    employees = employees.OrderByDescending(e => e.Username);
+                    break;
+                case "FullName":
+                    employees = employees.OrderBy(e => e.FullName);
+                    break;
+                case "FullName_Desc":
+                    employees = employees.OrderByDescending(e => e.FullName);
+                    break;
+                case "JoinDate":
+                    employees = employees.OrderBy(e => e.JoinDate);
+                    break;
+                case "JoinDate_Desc":
+                    employees = employees.OrderByDescending(e => e.JoinDate);
+                    break;
+                case "Team":
+                    employees = employees.OrderBy(e => e.Team);
+                    break;
+                case "Team_Desc":
+                    employees = employees.OrderByDescending(e => e.Team);
+                    break;
+                case "Position":
+                    employees = employees.OrderBy(e => e.Position);
+                    break;
+                case "Position_Desc":
+                    employees = employees.OrderByDescending(e => e.Position);
+                    break;
+                case "Status":
+                    employees = employees.OrderBy(e => e.Status);
+                    break;
+                case "Status_Desc":
+                    employees = employees.OrderByDescending(e => e.Status);
+                    break;
+                default:
+                    employees = employees.OrderBy(e => e.Username);
+                    break;
+            }
+
             int pageNumber = (page ?? 1);
-            return View(db.Employees.OrderBy(e => e.Username).ToPagedList(pageNumber, PageSize));
+            return View(employees.ToPagedList(pageNumber, PageSize));
         }
 
         // GET: Employees/Create

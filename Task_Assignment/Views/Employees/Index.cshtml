@@ -13,22 +13,22 @@
 <table class="table table-bordered table-striped">
     <tr>
         <th>
-            Username
+            @Html.ActionLink("Username", "Index", new { sortOrder = ViewBag.UsernameSortParm })
         </th>
         <th>
-            Full Name
+            @Html.ActionLink("Full Name", "Index", new { sortOrder = ViewBag.FullNameSortParm })
         </th>
         <th>
-            Join Date
+            @Html.ActionLink("Join Date", "Index", new { sortOrder = ViewBag.JoinDateSortParm })
         </th>
         <th>
-            Team
+            @Html.ActionLink("Team", "Index", new { sortOrder = ViewBag.TeamSortParm })
         </th>
         <th>
-            Position
+            @Html.ActionLink("Position", "Index", new { sortOrder = ViewBag.PositionSortParm })
         </th>
         <th>
-            Status
+            @Html.ActionLink("Status", "Index", new { sortOrder = ViewBag.StatusSortParm })
         </th>
         <th></th>
         <th></th>
