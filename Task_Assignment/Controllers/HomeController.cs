@@ -69,42 +69,87 @@ namespace Task_Assignment.Controllers
 
         private bool IsValid(Models.Employee user, string password)
         {
-            if (Convert.ToByte(Session["LoginAttempt"]) >= 10)
+            bool isIPValid = IsIPValid();
+            bool isUserNull = (user == null);
+            bool isUserValid = false;
+            bool isUserActive = false;
+            
+            if (!isUserNull)
             {
-                db.RestrictedIPs.Add(new Models.RestrictedIP() { IPAddress = Request.UserHostAddress });
-                db.SaveChanges();
+                isUserValid = IsUserValid(user, password);
+                isUserActive = IsUserActive(user);
             }
 
-            if (db.RestrictedIPs.Find(Request.UserHostAddress) != null)
+            if (!isIPValid)
             {
                 ModelState.AddModelError("", "Unable to log in from disallowed IP address.");
                 return false;
             }
 
-            if (user == null)
+            if (!isUserNull)
+            {
+                if (!isUserActive)
+                {
+                    ModelState.AddModelError("", "Too many failed login attempts. Account has been locked.");
+                    return false;
+                }
+
+                if (!isUserValid)
+                {
+                    ModelState.AddModelError("", "Incorrect username / password. Please try again.");
+                    return false;
+                }
+            }
+            else
             {
                 ModelState.AddModelError("", "Incorrect username / password. Please try again.");
                 return false;
             }
 
+            return true;
+        }
+
+        private bool IsIPValid()
+        {
+            if (db.RestrictedIPs.Find(Request.UserHostAddress) != null)
+            {
+                return false;
+            }
+
+            if (Convert.ToByte(Session["LoginAttempt"]) >= MaxLoginAttempt)
+            {
+                db.RestrictedIPs.Add(new Models.RestrictedIP() { IPAddress = Request.UserHostAddress });
+                db.SaveChanges();
+                return false;
+            }
+            
+            return true;
+        }
+
+        private bool IsUserValid(Models.Employee user, string password)
+        {
+            if (user.Password != password)
+            {
+                user.LoginAttempt++;
+                db.SaveChanges();
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool IsUserActive(Models.Employee user)
+        {
             if (user.LoginAttempt >= MaxLoginAttempt)
             {
                 user.Status = Models.Status.Suspended;
                 user.LoginAttempt = 0;
                 db.SaveChanges();
-            }
-
-            if (user.Status == Models.Status.Suspended)
-            {
-                ModelState.AddModelError("", "Too many failed login attempts. Account has been locked.  ");
                 return false;
             }
 
-            if (user.Password != password)
+            if (user.Status != Models.Status.Active)
             {
-                user.LoginAttempt++;
-                db.SaveChanges();
-                ModelState.AddModelError("", "Incorrect username / password. Please try again.");
                 return false;
             }
 
